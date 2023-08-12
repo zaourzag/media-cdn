@@ -1,0 +1,5 @@
+info.log
+dist/*
+.log
+node_modules
+dist

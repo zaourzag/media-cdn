@@ -1,0 +1,36 @@
+const express = require('express');
+const app = express();
+const fs = require('fs');
+app.listen(6060, () => {
+    console.log(`The application is running on localhost:6060!`);
+});
+const { createLogger, transports, format, Logger,winston } = require("winston")
+const expressWinston = require('express-winston');
+app.use(expressWinston.logger({
+    transports: [
+   
+    new transports.Console({
+              format: format.combine(format.simple(), format.colorize())
+            }),
+            new transports.File({
+                name: 'info-file',
+                filename: 'info.log',
+                level: 'info'
+            }),
+    ],
+    format: format.combine(
+      format.colorize(),
+      format.json()
+    ),
+    meta: true, // optional: control whether you want to log the meta data about the request (default to true)
+    msg: "HTTP {{req.method}} {{req.url}}", // optional: customize the default logging message. E.g. "{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}"
+    expressFormat: true, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
+    colorize: false, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
+    ignoreRoute: function (req, res) { return false; } // optional: allows to skip some log messages based on request and/or responsezzzzzzz
+  }));
+app.get('/api/v1/splashscreen.png', async (req, res) => {
+    const img = fs.readFileSync("C:\\ProgramData\\Jellyfin\\Server\\data\\splashscreen.png");
+    const buf = await Buffer.from(img, 'binary');
+    res.contentType('image/png');
+    res.send(buf);
+});
