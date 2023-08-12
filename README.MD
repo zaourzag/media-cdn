@@ -10,3 +10,4 @@
 and i dont know linux and mac paths
 2. run `npm install` to install the dependencies
 3. run ```npm run build``` to build the project
+4. run ```./dist/media-cdn``` to start the server
