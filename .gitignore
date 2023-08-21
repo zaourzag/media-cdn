@@ -3,3 +3,6 @@ dist/*
 .log
 node_modules
 dist
+dist/media-cdn-win.exe
+dist/media-cdn-linux
+dist/media-cdn-macos
