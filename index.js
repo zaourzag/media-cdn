@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const fs = require('fs');
+const splashscreen = "C:\\ProgramData\\Jellyfin\\Server\\data\\splashscreen.png";
 app.listen(27, () => {
     console.log(`The application is running on localhost:27!`);
 });
@@ -26,11 +27,10 @@ app.use(expressWinston.logger({
     msg: "HTTP {{req.method}} {{req.url}}", // optional: customize the default logging message. E.g. "{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}"
     expressFormat: true, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
     colorize: true, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
-    ignoreRoute: function (req, res) { return false; } // optional: allows to skip some log messages based on request and/or responsezzzzzzz
   }));
 app.get('/api/v1/splashscreen.png', async (req, res) => {
-    const img = fs.readFileSync("C:\\ProgramData\\Jellyfin\\Server\\data\\splashscreen.png");
-    const buf = await Buffer.from(img, 'binary');
+ //   const img = fs.readFileSync(splashscreen);
+    const buffer = await Buffer.from(( fs.readFileSync(splashscreen)), 'binary');
     res.contentType('image/png');
-    res.send(buf);
+    res.send(buffer);
 });
